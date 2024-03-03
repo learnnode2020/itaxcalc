@@ -1,0 +1,128 @@
+<!-- <div class="pl-2"> -->
+<h4> Income Tax Calculator for Individuals below 60 years and HUF</h4>
+<form class="row" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="!form.valid && isSubmitted" class="alert alert-danger">
+        <div>
+            <h2> Error Summary</h2>
+            <div *ngIf="f['income'].invalid && f['income'].errors && f['income'].errors['required']">
+                Income Required
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 row">
+        <!-- <div class="col-lg-9"> -->
+        <div class="col-md-8">
+            <div class="col-md-3">
+                <label class="form-label" for="income">Net Income</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" formControlName='income' class="form-control" id="income" name="income"
+                    placeholder="Input your net income">
+            </div>
+        </div>
+        <div class="col-md-3 float-end">
+            <button class=" btn btn-secondary"> Calculate Tax</button>
+        </div>
+        <!-- </div>
+        <div class="col-md-4"></div> -->
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <h4> Enter Deductions for Old Regime</h4>
+                <!-- <div class="col-lg-9"> -->
+                <div class="col-md-6">
+                    <label class="form-label" for="income">HRA Deduction Amount</label>
+                    <input type="text" formControlName='hra_deduction' class="form-control" id="hra_deduction"
+                        placeholder="HRA deduction amount">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Investments 80 C Amount</label>
+                    <input type="text" formControlName='d80c_deduction' class="form-control" id="d80c_deduction"
+                        placeholder="80C deducation max of 1.5L">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Investments NPS 80 CCD(1B) Amount</label>
+                    <input type="text" formControlName='d80ccd1b_deduction' class="form-control" id="d80ccd1b_deduction"
+                        placeholder="NPS 80CCD deducation max of 50K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Medical insurance premium 80 D Deduction</label>
+                    <input type="text" formControlName='d80d_deduction' class="form-control" id="d80d_deduction"
+                        placeholder="NPS 80D deducation max of 25K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Income From Interest 80TTA/80TTB Amount</label>
+                    <input type="text" formControlName='d80ttattb_deduction' class="form-control"
+                        id="d80ttattb_deduction" placeholder="NPS 80D deducation max of 25K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Interest on Home Loan US24</label>
+                    <input type="text" formControlName='d24interest' class="form-control" id="d24interest"
+                        placeholder="NPS 80D deducation max of 25K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Interest on Education Loan US80E</label>
+                    <input type="text" formControlName='d80E_educationloaninterest' class="form-control"
+                        id="d80E_educationloaninterest" placeholder="NPS 80D deducation max of 25K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Employer Contribution NPS 80 CCD(2) Amount</label>
+                    <input type="text" formControlName='d80ccd2_deduction' class="form-control" id="d80ccd2_deduction"
+                        placeholder="NPS 80D deducation max of 25K">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">Professional Tax Amount</label>
+                    <input type="text" formControlName='prof_tax' class="form-control" id="prof_tax"
+                        placeholder="prof_tax max 2500">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="income">TCS paid</label>
+                    <input type="text" formControlName='tcs_tax' class="form-control" id="tcs_tax"
+                        placeholder="tcs paid already">
+                </div>
+                <div class="col-md-6 float-end">
+                    <button class=" btn btn-secondary"> Calculate Tax</button>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="form.valid && isSubmitted">
+                <div class="col-md-12">
+
+                    <span>Total Annual Income</span>₹
+                    <br>
+                    <div class="col-md-6 row">
+                        <span>Old Regime</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span>New Regime</span>
+                    </div>
+
+                </div>
+
+                <span>Total Investment</span>₹
+                <br>
+                <span>Your Taxable Income under Old Regime</span>₹
+                <br>
+                <span>Your Taxable Income under New Regime</span>₹
+                <br>
+                <span id="totalTaxBased_oldregime">Tax payable under Old Regime: </span>₹{{totalTax_old}}
+                <br>
+                <span id="totalTaxBased_newregime">Tax payable under New Regime: </span> ₹{{totalTax_new}}
+                <br>
+                <span id="totalTaxBased_oldregime">Tax payable under Old Regime With Cess: </span> ₹{{tax_old_withcess}}
+                <br>
+                <span id="totalTaxBased_newregime">Tax payable under New Regime with Cess: </span> ₹{{tax_new_withcess}}
+                <!-- <label class="form-label" for="totalTaxBased_oldregime"> Total Tax based on old regime</label>
+                        <span id="totalTaxBased_oldregime" formControlName="totalTaxBased_oldregime"></span>
+                        <label class="form-label" for="totalTaxBased_newregime"> Total Tax based on new regime</label>
+                        <span id="totalTaxBased_newregime" formControlName="totalTaxBased_newregime"></span> -->
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+    <span>Disclaimer:
+
+        Refer to the Income-tax Act, 1961 for the applicability of the relevant provisions.</span>
+</form>
+<!-- </div> -->
