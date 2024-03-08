@@ -11,6 +11,7 @@ export class TaxCalculatorService {
   calculated_tax: any = 0.00;
 
   taxCalculator_old_regime(netincome: any): any{
+    this.totalTax = 0;
     if (netincome <= 250000) {
       return this.totalTax;
     }
@@ -34,6 +35,7 @@ export class TaxCalculatorService {
   }
 
   taxCalculated_new_regime(netIncome: any): any{
+    this.totalTax = 0;
     if (netIncome <= 300000) {
       return this.totalTax;
     }

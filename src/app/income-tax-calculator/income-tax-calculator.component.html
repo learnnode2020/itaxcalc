@@ -381,18 +381,23 @@
 
         <div class="col-md-8" *ngIf="form.valid && isSubmitted">
           <!-- <div class="col-md-12"> -->
-          <div *ngIf="isNewProfitable">
+          <div *ngIf="isNewProfitable && !neworoldRegime">
             <h5>
               You can Choose new regime over old regime,since you can save upto
               ₹{{ taxDifference }}
             </h5>
           </div>
-          <div *ngIf="!isNewProfitable">
+          <div *ngIf="!isNewProfitable && !neworoldRegime">
             <h5>
               You can Choose old regime over new regime ,since you can save upto
               ₹{{ taxDifference }}
             </h5>
           </div>
+            <div *ngIf="neworoldRegime">
+            <h5>
+              You can Choose either old regime or new regime ,since your tax is ₹0
+            </h5>
+          </div> 
           <br />
           
           <ul class="list-group">
@@ -431,7 +436,7 @@
                 >
                   New Regime
                   <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_new_withcess }}</span
+                    >₹{{ tax_new_withcess_less_tds }}</span
                   >
                 </li>
                 <li
@@ -480,7 +485,7 @@
                 >
                   Tax with health & Ed Cess(4%)
                   <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_new_withcess }}</span
+                    >₹{{ tax_new_withcess_less_tds }}</span
                   >
                 </li>
               </ul>
@@ -494,7 +499,7 @@
                 >
                   Old Regime
                   <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_old_withcess }}</span
+                    >₹{{ tax_old_withcess_less_tds }}</span
                   >
                 </li>
                 <li
@@ -543,7 +548,7 @@
                 >
                   Tax with health & Ed Cess(4%)
                   <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_old_withcess }}</span
+                    >₹{{ tax_old_withcess_less_tds }}</span
                   >
                 </li>
                 
