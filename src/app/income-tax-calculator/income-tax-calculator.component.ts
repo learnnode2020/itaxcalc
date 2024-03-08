@@ -143,11 +143,11 @@ export class IncomeTaxCalculatorComponent implements OnInit {
       this.total_tax_after_rebate_old = 0;
     
     if (this.total_tax_after_rebate_new - this.total_tax_after_rebate_old > 0) {
-      this.isNewProfitable = true;
+      this.isNewProfitable = false;
       this.taxDifference = this.total_tax_after_rebate_new - this.total_tax_after_rebate_old;
     }
     else {
-      this.isNewProfitable = false;
+      this.isNewProfitable = true;
       this.taxDifference = this.total_tax_after_rebate_old - this.total_tax_after_rebate_new;
     }
   }
