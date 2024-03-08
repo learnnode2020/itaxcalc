@@ -1,128 +1,661 @@
-<!-- <div class="pl-2"> -->
-<h4> Income Tax Calculator for Individuals below 60 years and HUF</h4>
-<form class="row" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+<nav class="navbar navbar-light px-5 backcolor">
+  <span class="navbar-text">
+    <h4>Income Tax Calculator for Individuals below 60 years and HUF</h4>
+  </span>
+</nav>
+<br />
+<div class="container bg-light">
+  <form class="row" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
     <div *ngIf="!form.valid && isSubmitted" class="alert alert-danger">
-        <div>
-            <h2> Error Summary</h2>
-            <div *ngIf="f['income'].invalid && f['income'].errors && f['income'].errors['required']">
-                Income Required
-            </div>
+      <div>
+        <h2>Error Summary</h2>
+        <div
+          *ngIf="
+            f['income'].invalid &&
+            f['income'].errors &&
+            f['income'].errors['required']
+          "
+        >
+          Income Required
         </div>
+        <div
+          *ngIf="
+            f['d80c_deduction'].invalid &&
+            f['d80c_deduction'].errors &&
+            f['d80c_deduction'].errors['max']
+          "
+        >
+          You cant claim 80C more than INR 1,50,000
+        </div>
+        <div
+          *ngIf="
+            f['d80ccd1b_deduction'].invalid &&
+            f['d80ccd1b_deduction'].errors &&
+            f['d80ccd1b_deduction'].errors['max']
+          "
+        >
+          You cant claim 80CCD(1B) more than INR 50,000
+        </div>
+        <div
+          *ngIf="
+            f['d80ccd2_deduction'].invalid &&
+            f['d80ccd2_deduction'].errors &&
+            f['d80ccd2_deduction'].errors['max']
+          "
+        >
+          You cant claim 80CCD(2) more than INR 50,000
+        </div>
+        <div
+          *ngIf="
+            f['d80d_deduction'].invalid &&
+            f['d80d_deduction'].errors &&
+            f['d80d_deduction'].errors['max']
+          "
+        >
+          For a person aged below 60 years, the limit for deduction under
+          Section 80D is upto `25,000. The limit of `25,000 includes `5,000 on
+          preventive health checkup. If the age of the insured is above 60
+          years, the limit for deduction increases upto INR `50,000.
+        </div>
+        <div
+          *ngIf="
+            f['d80tta_deduction'].invalid &&
+            f['d80tta_deduction'].errors &&
+            f['d80tta_deduction'].errors['max']
+          "
+        >
+          You cant avail benefit on savings interest if you mention as other
+          income upto INR 10,000
+        </div>
+        <div
+          *ngIf="
+            f['prof_tax'].invalid &&
+            f['prof_tax'].errors &&
+            f['prof_tax'].errors['max']
+          "
+        >
+          In india maximum Professional tax is INR 2,500
+        </div>
+        <div
+          *ngIf="
+            f['d80EEinterest'].invalid &&
+            f['d80EEinterest'].errors &&
+            f['d80EEinterest'].errors['max']
+          "
+        >
+          Section 80EE is an additional deduction of up to INR 50,000. Section
+          24(b) allows a benefit of INR 2,00,000.
+        </div>
+        <div
+          *ngIf="
+            f['d24interest'].invalid &&
+            f['d24interest'].errors &&
+            f['d24interest'].errors['max']
+          "
+        >
+          Section 24(b) allows a deduction of INR 2,00,000. Section 80EE is an
+          additional benefit of up to INR 50,000
+        </div>
+      </div>
     </div>
     <div class="col-lg-12 row">
-        <!-- <div class="col-lg-9"> -->
-        <div class="col-md-8">
-            <div class="col-md-3">
-                <label class="form-label" for="income">Net Income</label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" formControlName='income' class="form-control" id="income" name="income"
-                    placeholder="Input your net income">
-            </div>
+      <div class="col-md-10 row">
+        <div class="col-md-2 pt-2">
+          <label class="form-label" for="income">Net Income</label>&nbsp;
+          <span
+            class="bi bi-info-circle-fill"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Enter you total income including other income"
+          ></span>
         </div>
-        <div class="col-md-3 float-end">
-            <button class=" btn btn-secondary"> Calculate Tax</button>
+        <div class="col-md-5">
+          <input
+            type="number"
+            formControlName="income"
+            class="form-control"
+            id="income"
+            name="income"
+            placeholder="Input your net income"
+          />
         </div>
-        <!-- </div>
-        <div class="col-md-4"></div> -->
+        <div class="col-md-2 float-end">
+          <button class="btn btn-secondary">Calculate Tax</button>
+        </div>
+      </div>
     </div>
+    <br />
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-6">
-                <h4> Enter Deductions for Old Regime</h4>
-                <!-- <div class="col-lg-9"> -->
-                <div class="col-md-6">
-                    <label class="form-label" for="income">HRA Deduction Amount</label>
-                    <input type="text" formControlName='hra_deduction' class="form-control" id="hra_deduction"
-                        placeholder="HRA deduction amount">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Investments 80 C Amount</label>
-                    <input type="text" formControlName='d80c_deduction' class="form-control" id="d80c_deduction"
-                        placeholder="80C deducation max of 1.5L">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Investments NPS 80 CCD(1B) Amount</label>
-                    <input type="text" formControlName='d80ccd1b_deduction' class="form-control" id="d80ccd1b_deduction"
-                        placeholder="NPS 80CCD deducation max of 50K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Medical insurance premium 80 D Deduction</label>
-                    <input type="text" formControlName='d80d_deduction' class="form-control" id="d80d_deduction"
-                        placeholder="NPS 80D deducation max of 25K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Income From Interest 80TTA/80TTB Amount</label>
-                    <input type="text" formControlName='d80ttattb_deduction' class="form-control"
-                        id="d80ttattb_deduction" placeholder="NPS 80D deducation max of 25K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Interest on Home Loan US24</label>
-                    <input type="text" formControlName='d24interest' class="form-control" id="d24interest"
-                        placeholder="NPS 80D deducation max of 25K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Interest on Education Loan US80E</label>
-                    <input type="text" formControlName='d80E_educationloaninterest' class="form-control"
-                        id="d80E_educationloaninterest" placeholder="NPS 80D deducation max of 25K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Employer Contribution NPS 80 CCD(2) Amount</label>
-                    <input type="text" formControlName='d80ccd2_deduction' class="form-control" id="d80ccd2_deduction"
-                        placeholder="NPS 80D deducation max of 25K">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">Professional Tax Amount</label>
-                    <input type="text" formControlName='prof_tax' class="form-control" id="prof_tax"
-                        placeholder="prof_tax max 2500">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="income">TCS paid</label>
-                    <input type="text" formControlName='tcs_tax' class="form-control" id="tcs_tax"
-                        placeholder="tcs paid already">
-                </div>
-                <div class="col-md-6 float-end">
-                    <button class=" btn btn-secondary"> Calculate Tax</button>
-                </div>
-            </div>
-
-            <div class="col-md-6" *ngIf="form.valid && isSubmitted">
-                <div class="col-md-12">
-
-                    <span>Total Annual Income</span>₹
-                    <br>
-                    <div class="col-md-6 row">
-                        <span>Old Regime</span>
-                    </div>
-                    <div class="col-md-6">
-                        <span>New Regime</span>
-                    </div>
-
-                </div>
-
-                <span>Total Investment</span>₹
-                <br>
-                <span>Your Taxable Income under Old Regime</span>₹
-                <br>
-                <span>Your Taxable Income under New Regime</span>₹
-                <br>
-                <span id="totalTaxBased_oldregime">Tax payable under Old Regime: </span>₹{{totalTax_old}}
-                <br>
-                <span id="totalTaxBased_newregime">Tax payable under New Regime: </span> ₹{{totalTax_new}}
-                <br>
-                <span id="totalTaxBased_oldregime">Tax payable under Old Regime With Cess: </span> ₹{{tax_old_withcess}}
-                <br>
-                <span id="totalTaxBased_newregime">Tax payable under New Regime with Cess: </span> ₹{{tax_new_withcess}}
-                <!-- <label class="form-label" for="totalTaxBased_oldregime"> Total Tax based on old regime</label>
-                        <span id="totalTaxBased_oldregime" formControlName="totalTaxBased_oldregime"></span>
-                        <label class="form-label" for="totalTaxBased_newregime"> Total Tax based on new regime</label>
-                        <span id="totalTaxBased_newregime" formControlName="totalTaxBased_newregime"></span> -->
-            </div>
+      <br />
+      <div class="row">
+        <div class="col-md-4">
+          <div class="col-md-8">
+            <label class="form-label" for="other_income"
+              >Savings Interest Income</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Tooltip on top"
+            ></span>
+            <input
+              type="number"
+              formControlName="other_income"
+              class="form-control"
+              id="other_income"
+              name="other_income"
+              placeholder="Input your other income"
+            />
+          </div>
+          <h4>Grab you Deductions</h4>
+          <!-- <div class="col-lg-9"> -->
+          <div class="col-md-8">
+            <label class="form-label" for="hra_deduction"
+              >HRA Deduction Amount</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter you HRA applicable amount"
+            >
+            </span>
+            <input
+              type="number"
+              formControlName="hra_deduction"
+              class="form-control"
+              id="hra_deduction"
+              placeholder="HRA deduction amount"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80c_deduction"
+              >Investments 80 C</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter total 80 C Investments"
+            >
+            </span>
+            <input
+              type="number"
+              formControlName="d80c_deduction"
+              class="form-control"
+              id="d80c_deduction"
+              max="150000"
+              placeholder="80C max of 1.5L"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80ccd1b_deduction">
+              NPS 80 CCD(1B)</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter Additional contribution to NPS by employee"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80ccd1b_deduction"
+              class="form-control"
+              id="d80ccd1b_deduction"
+              max="50000"
+              placeholder="NPS 80CCD max of 50K"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80d_deduction"
+              >Medical premium (80 D)</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter 80D amount including health check up amount"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80d_deduction"
+              class="form-control"
+              id="d80d_deduction"
+              max="50000"
+              placeholder=" 80D, max of 50K"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80tta_deduction"
+              >interest on Savings 80TTA</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter amount for savings interest excemption"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80tta_deduction"
+              class="form-control"
+              id="d80tta_deduction"
+              max="10000"
+              placeholder="Interest on Savings A/C"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d24interest"
+              >Interest on Home Loan US24</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter interest of Home loan"
+            ></span>
+            <input
+              type="number"
+              formControlName="d24interest"
+              class="form-control"
+              id="d24interest"
+              max="200000"
+              placeholder="Interest on Home Loan"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80EEinterest"
+              >Additional Benefit 80EE</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter additional beneit from home loan interest"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80EEinterest"
+              class="form-control"
+              id="d80EEinterest"
+              max="50000"
+              placeholder="Interest on Home Loan"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80E_educationloaninterest"
+              >Interest on Edu Loan US80E</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter Education loan interest"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80E_educationloaninterest"
+              class="form-control"
+              id="d80E_educationloaninterest"
+              placeholder="Interest on Edu loan"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="d80ccd2_deduction">
+              NPS 80CCD(2)</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter NPS contributed by employer"
+            ></span>
+            <input
+              type="number"
+              formControlName="d80ccd2_deduction"
+              class="form-control"
+              id="d80ccd2_deduction"
+              max="50000"
+              placeholder="80CCD(2), max of 50K"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="prof_tax">Professional Tax</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Enter deductable professional tax"
+            ></span>
+            <input
+              type="number"
+              formControlName="prof_tax"
+              class="form-control"
+              id="prof_tax"
+              max="2500"
+              placeholder="prof_tax max 2500"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="tcs_tax">TCS refundable Amount</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="TCS refundable amount"
+            ></span>
+            <input
+              type="number"
+              formControlName="tcs_tax"
+              class="form-control"
+              id="tcs_tax"
+              placeholder="TCS refundable Amt"
+            />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="tds_tax">TDS refundable Amount</label
+            >&nbsp;
+            <span
+              class="bi bi-info-circle-fill"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="TDS refundable amount"
+            ></span>
+            <input
+              type="number"
+              formControlName="tds_tax"
+              class="form-control"
+              id="tds_tax"
+              placeholder="TDS refundable Amt"
+            />
+          </div>
+          <br />
+          <div class="col-md-8 float-end">
+            <button class="btn btn-secondary">Calculate Tax</button>
+          </div>
         </div>
-    </div>
-    <!-- </div> -->
-    <span>Disclaimer:
 
-        Refer to the Income-tax Act, 1961 for the applicability of the relevant provisions.</span>
-</form>
-<!-- </div> -->
+        <div class="col-md-8" *ngIf="form.valid && isSubmitted">
+          <!-- <div class="col-md-12"> -->
+          <div *ngIf="isNewProfitable">
+            <h5>
+              You can Choose new regime over old regime,since you can save upto
+              ₹{{ taxDifference }}
+            </h5>
+          </div>
+          <div *ngIf="!isNewProfitable">
+            <h5>
+              You can Choose old regime over new regime ,since you can save upto
+              ₹{{ taxDifference }}
+            </h5>
+          </div>
+          <br />
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Total Annual Income
+              <span class="badge bg-primary badge-pill"
+                >₹ {{ netIncome + other_income }}</span
+              >
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Total Tax Liability on Income under Old Regime
+              <span class="badge bg-primary badge-pill"
+                >₹{{ tax_old_withcess }}</span
+              >
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Total Tax Liability on Income under New Regime
+              <span class="badge bg-primary badge-pill"
+                >₹{{ tax_new_withcess }}</span
+              >
+            </li>
+          </ul>
+          <br />
+          <div class="col-md-12 row">
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center backcolor"
+                >
+                  New Regime
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_new_withcess }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Total Deductions
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ total_deductions_new }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Net Taxable Income
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ calculated_netIncome_newregime }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Total Tax Liability
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ totalTax_new }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax with health & Ed Cess(4%)
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_new_withcess }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax Rebate u/s 87A
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ eligible_tax_rebate_new }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Payable Tax after Rebate
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ total_tax_after_rebate_new }}</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center backcolor"
+                >
+                  Old Regime
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_old_withcess }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Total Deductions
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ total_deductions_old }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Net Taxable Income
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ calculated_netIncome_oldregime }}</span
+                  >
+                </li>
+
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Total Tax Liability
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ totalTax_old }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax with health & Ed Cess(4%)
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_old_withcess }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax Rebate u/s 87A
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ eligible_tax_rebate_old }}</span
+                  >
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Payable Tax after Rebate
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ total_tax_after_rebate_old }}</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <br />
+          <div class="col-md-12 ">
+            <h5>Deduction Summary under Old Regime</h5>
+            <br />
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Total HRA Deduction Amount
+                <span class="badge bg-primary badge-pill"
+                  >₹ {{ hra_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Standard Deduction Amount
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ std_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Investment Amount -80C
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80c_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Investment Amount -80CCD
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80ccd1b_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Amount -80D
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80d_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Investment Amount -80CCD(2)
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80ccd2_deduction }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Amount -80TTA
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ eligible_80tta }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Amount of Interst in Home Loan -US24
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d24interest }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Amount of Interst in Home Loan -80EE
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80EEinterest }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Eligible Amount of interest in Ed loan -US 80E
+                <span class="badge bg-primary badge-pill"
+                  >₹{{ d80E_educationloaninterest }}</span
+                >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                less Professional Tax
+                <span class="badge bg-primary badge-pill">₹{{ prof_tax }}</span>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                less TCS Paid
+                <span class="badge bg-primary badge-pill">₹{{ tcs_tax }}</span>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                less TDS Paid
+                <span class="badge bg-primary badge-pill">₹{{ tds_tax }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br />
+  <span
+    >Disclaimer: Refer to the Income-tax Act, 1961 for the applicability of the
+    relevant provisions.</span
+  >
+</div>
