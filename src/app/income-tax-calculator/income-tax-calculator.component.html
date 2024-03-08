@@ -137,7 +137,7 @@
               class="bi bi-info-circle-fill"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
-              title="Tooltip on top"
+              title="Enter savings interest"
             ></span>
             <input
               type="number"
@@ -394,6 +394,7 @@
             </h5>
           </div>
           <br />
+          
           <ul class="list-group">
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
@@ -423,6 +424,7 @@
           <br />
           <div class="col-md-12 row">
             <div class="col-md-6">
+              <br />
               <ul class="list-group">
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center backcolor"
@@ -456,14 +458,7 @@
                     >₹{{ totalTax_new }}</span
                   >
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  Tax with health & Ed Cess(4%)
-                  <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_new_withcess }}</span
-                  >
-                </li>
+               
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
@@ -480,9 +475,19 @@
                     >₹{{ total_tax_after_rebate_new }}</span
                   >
                 </li>
+                 <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax with health & Ed Cess(4%)
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_new_withcess }}</span
+                  >
+                </li>
               </ul>
+              <br/>
             </div>
             <div class="col-md-6">
+              <br />
               <ul class="list-group">
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center backcolor"
@@ -517,14 +522,7 @@
                     >₹{{ totalTax_old }}</span
                   >
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  Tax with health & Ed Cess(4%)
-                  <span class="badge bg-primary badge-pill"
-                    >₹{{ tax_old_withcess }}</span
-                  >
-                </li>
+              
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
@@ -539,9 +537,18 @@
                   Payable Tax after Rebate
                   <span class="badge bg-primary badge-pill"
                     >₹{{ total_tax_after_rebate_old }}</span
+                  ></li>
+                    <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tax with health & Ed Cess(4%)
+                  <span class="badge bg-primary badge-pill"
+                    >₹{{ tax_old_withcess }}</span
                   >
                 </li>
+                
               </ul>
+              <br/>
             </div>
           </div>
           <br />

@@ -117,24 +117,47 @@ export class IncomeTaxCalculatorComponent implements OnInit {
     this.calculated_netIncome_oldregime = Math.floor(this.netIncome +this.other_income_after_80tta - this.total_deductions_old);
     this.calculated_netIncome_newregime = Math.floor(this.netIncome +this.other_income- this.total_deductions_new);
     this.totalTax_old = this.taxCalculatorService.taxCalculator_old_regime(this.calculated_netIncome_oldregime);
-    this.totalTax_new = this.taxCalculatorService.taxCalculated_new_regime(this.calculated_netIncome_newregime);
-    //include health cess
-    this.tax_new_withcess = Math.floor(this.calculateTaxWithCess(this.totalTax_new));
-    this.tax_old_withcess = Math.floor(this.calculateTaxWithCess(this.totalTax_old));
-
-       this.tax_new_withcess_less_tds = Math.floor(this.calculateTaxWithCess(this.totalTax_new) -this.tcs_tax - this.tds_tax);
-       this.tax_old_withcess_less_tds = Math.floor(this.calculateTaxWithCess(this.totalTax_old) - this.tcs_tax - this.tds_tax);
+    this.totalTax_new = this.taxCalculatorService.taxCalculated_new_regime(
+      this.calculated_netIncome_newregime
+    );
 
     let tax_rebate_newregime: number = 25000;
     let tax_rebate_oldregime: number = 12500;
 
- if (this.calculated_netIncome_newregime <= 700000)
-      this.eligible_tax_rebate_new = this.tax_new_withcess -tax_rebate_newregime;
-    if (this.calculated_netIncome_oldregime <= 500000)
-       this.eligible_tax_rebate_old = this.tax_old_withcess-tax_rebate_oldregime;
+      if (this.calculated_netIncome_newregime <= 700000)
+        this.eligible_tax_rebate_new =
+          tax_rebate_newregime - this.totalTax_new > 0 ? this.totalTax_new : 0;
+      if (this.calculated_netIncome_oldregime <= 500000)
+        this.eligible_tax_rebate_old =
+          tax_rebate_oldregime - this.totalTax_old >= 0 ? this.totalTax_old : 0;
 
-    this.total_tax_after_rebate_new = Math.floor(this.tax_new_withcess - this.eligible_tax_rebate_new);
-    this.total_tax_after_rebate_old = Math.floor(this.tax_old_withcess - this.eligible_tax_rebate_old);
+      this.total_tax_after_rebate_new = Math.floor(
+        this.totalTax_new - this.eligible_tax_rebate_new
+      );
+      this.total_tax_after_rebate_old = Math.floor(
+        this.totalTax_old - this.eligible_tax_rebate_old
+      );
+
+      //include health cess
+      this.tax_new_withcess = Math.floor(
+        this.calculateTaxWithCess(this.total_tax_after_rebate_new)
+      );
+      this.tax_old_withcess = Math.floor(
+        this.calculateTaxWithCess(this.total_tax_after_rebate_old)
+      );
+
+      this.tax_new_withcess_less_tds = Math.floor(
+        this.calculateTaxWithCess(this.totalTax_new) -
+          this.tcs_tax -
+          this.tds_tax
+      );
+      this.tax_old_withcess_less_tds = Math.floor(
+        this.calculateTaxWithCess(this.totalTax_old) -
+          this.tcs_tax -
+          this.tds_tax
+      );
+
+  
 
     if (this.total_tax_after_rebate_new < 0)
       this.total_tax_after_rebate_new = 0;
